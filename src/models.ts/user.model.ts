@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken";
 
-export class User {
+
+export class User { 
     id : number
     name: string
     email: string
@@ -12,8 +12,5 @@ export class User {
         this.name = data.name
         this.password = data.password
     }
-
-    // login
-
+    
 }
-

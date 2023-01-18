@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { connect } from "../utils/db";
 
 export class ProductController {
-  // development endpoint 
   public async listAllProducst(req: Request, res: Response): Promise<void> {
     try {
       const db = await connect();
@@ -25,17 +24,15 @@ export class ProductController {
       // check if the product belongs to the user
       const checkQuery = "SELECT * FROM products WHERE id = ? ";
       const product = (await db.query(checkQuery, [id])) as any;
-
-
       if (!Array.isArray(product) || product[0].length === 0) {
         return res.status(404).send("Product not found");
       }
       if (product[0][0].user_id != user_id) {
         return res.status(401).send("Not allowed to update this product");
       }
+
       // update the product
-      const updateQuery =
-        "UPDATE products SET title = ?, image = ?, price = ? WHERE id = ?";
+      const updateQuery = "UPDATE products SET title = ?, image = ?, price = ? WHERE id = ?";
 
       await db.query(updateQuery, [
         title || product[0][0].title,

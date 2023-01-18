@@ -13,8 +13,7 @@ export class UserController {
       }
 
       const db = await connect();
-      const email = req.body.email;
-      const password = req.body.password;
+      const {email, password} = req.body;
 
       const sqlQuery = "SELECT * FROM users WHERE email = ?";
 
@@ -24,7 +23,7 @@ export class UserController {
       }
 
       const user = new User(rows[0]);
-      // compare pass
+      // check password validation
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
         return res.status(401).send("Invalid password");
